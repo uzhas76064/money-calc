@@ -1,15 +1,53 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 
-function App() {
-  return (
-      <>
-        <Header/>
-        <Main/>
-      </>
-  );
-}
+export default class App extends Component {
+    state = {
+      transactions: [],
+        description: '',
+        amount: ''
+    };
 
-export default App;
+    addDescription = (e) => {
+        this.setState({
+            description: e.target.value
+        })
+    };
+
+    addAmount = (e) => {
+        this.setState({
+            amount: e.target.value
+        })
+    };
+
+    addTransaction =(add) => {
+      const transactions = [...this.state.transactions];
+
+      const  transaction = {
+          id: `cmr${(+new Date()).toString(16)}`,
+          description: this.state.description,
+          amount: this.state.amount,
+          add
+      };
+
+      transactions.push(transaction);
+
+      this.setState({transactions});
+
+        console.log(transactions)
+    };
+
+    render() {
+        return (
+            <>
+                <Header/>
+                <Main transactions={this.state.transactions}
+                      addAmount={this.addAmount}
+                      addDescription={this.addDescription}
+                      addTransaction={this.addTransaction}/>
+            </>
+        );
+    }
+}
