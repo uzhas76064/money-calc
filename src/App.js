@@ -7,7 +7,8 @@ export default class App extends Component {
     state = {
       transactions: [],
         description: '',
-        amount: ''
+        amount: null,
+        balance: 0
     };
 
     addDescription = (e) => {
@@ -18,7 +19,7 @@ export default class App extends Component {
 
     addAmount = (e) => {
         this.setState({
-            amount: e.target.value
+            amount: Number(e.target.value)
         })
     };
 
@@ -33,8 +34,10 @@ export default class App extends Component {
       };
 
       transactions.push(transaction);
-
-      this.setState({transactions});
+      this.setState({
+          transactions,
+          balance: transactions.reduce((a, b) => a + b.amount, 0)
+      });
 
         console.log(transactions)
     };
@@ -46,7 +49,8 @@ export default class App extends Component {
                 <Main transactions={this.state.transactions}
                       addAmount={this.addAmount}
                       addDescription={this.addDescription}
-                      addTransaction={this.addTransaction}/>
+                      addTransaction={this.addTransaction}
+                      balance={this.state.balance}/>
             </>
         );
     }

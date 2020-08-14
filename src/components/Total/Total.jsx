@@ -1,11 +1,11 @@
 import React from "react";
 
-const Total = () => {
+const Total = (props) => {
     return (
         <section className="total">
             <header className="total__header">
                 <h3>Баланс</h3>
-                <p className="total__balance">0 ₽</p>
+                <p className="total__balance">{props.balance} ₽</p>
             </header>
             <div className="total__main">
                 <div className="total__main-item total__income">
