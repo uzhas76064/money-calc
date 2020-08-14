@@ -7,8 +7,8 @@ const Main = (props) => {
     return (
         <main>
             <div className="container">
-                <Total income={props.income} balance={props.balance}/>
-                <History transactions={props.transactions}/>
+                <Total  expenses={props.expenses} income={props.income} balance={props.balance}/>
+                <History deleteTransaction={props.deleteTransaction} transactions={props.transactions}/>
                 <Operation addAmount={props.addAmount}
                            addDescription={ props.addDescription}
                            addTransaction={props.addTransaction}/>
