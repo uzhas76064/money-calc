@@ -11,7 +11,7 @@ const Total = (props) => {
                 <div className="total__main-item total__income">
                     <h4>Доходы</h4>
                     <p className="total__money total__money-income">
-                        +0 ₽
+                        +{props.income} ₽
                     </p>
                 </div>
                 <div className="total__main-item total__expenses">

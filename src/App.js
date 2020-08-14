@@ -7,8 +7,10 @@ export default class App extends Component {
     state = {
       transactions: [],
         description: '',
-        amount: null,
-        balance: 0
+        amount: 0,
+        balance: 0,
+        income: 0,
+        expenses: 0
     };
 
     addDescription = (e) => {
@@ -30,13 +32,25 @@ export default class App extends Component {
           id: `cmr${(+new Date()).toString(16)}`,
           description: this.state.description,
           amount: this.state.amount,
+          income: this.state.income,
           add
       };
 
       transactions.push(transaction);
+        if(add) {
+            this.setState({
+                income: transactions.reduce((total, elem) => total + elem.amount, 0)
+            })
+        }
+        else if(!add) {
+            this.setState({
+                expenses: transactions.reduce((total, elem) => elem.income - elem.amount),
+            })
+        }
+
       this.setState({
           transactions,
-          balance: transactions.reduce((a, b) => a + b.amount, 0)
+          balance: transactions.reduce((total, elem) => elem.amount + total, 0)
       });
 
         console.log(transactions)
@@ -50,7 +64,8 @@ export default class App extends Component {
                       addAmount={this.addAmount}
                       addDescription={this.addDescription}
                       addTransaction={this.addTransaction}
-                      balance={this.state.balance}/>
+                      balance={this.state.balance}
+                      income={this.state.income}/>
             </>
         );
     }

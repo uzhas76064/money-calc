@@ -7,7 +7,7 @@ const Main = (props) => {
     return (
         <main>
             <div className="container">
-                <Total balance={props.balance}/>
+                <Total income={props.income} balance={props.balance}/>
                 <History transactions={props.transactions}/>
                 <Operation addAmount={props.addAmount}
                            addDescription={ props.addDescription}
