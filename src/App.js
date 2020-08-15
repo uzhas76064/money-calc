@@ -21,28 +21,33 @@ export default class App extends Component {
         this.addToStorage();
     }
 
+    //Добавление описания к транзакции
     addDescription = (e) => {
         this.setState({
             description: e.target.value
         })
     };
 
+    //Ввод суммы расхода/дохода
     addAmount = (e) => {
         this.setState({
             amount: Number(e.target.value)
         })
     };
 
+    //Подсчет доходов
     computeIncome = () => {
         return this.state.transactions
             .reduce((total, item) => item.add ? total + item.amount:total, 0)
     };
 
+    //Подсчет расходов
     computeExpenses = () => {
         return this.state.transactions
             .reduce((total, item) => !item.add ? total + item.amount:total, 0)
     };
 
+    //Подсчет всего баланса с доходами и расходами
     computeBalance = () => {
         const incomeRes = this.computeIncome();
         const expensesRes = this.computeExpenses();
@@ -56,6 +61,7 @@ export default class App extends Component {
         })
     };
 
+    //Добавление транзакции
     addTransaction =(add) => {
       const transactions = [...this.state.transactions];
 
@@ -70,17 +76,18 @@ export default class App extends Component {
 
       transactions.push(transaction);
 
+      //Добавление транзакции в state и подсчет баланса
       this.setState({
           transactions,
-      }, () => {
-          this.computeBalance();
-      });
+      }, this.computeBalance);
     };
 
+    //Добавление транзакций в localStorage
     addToStorage = () => {
       localStorage.setItem('calcMoney', JSON.stringify(this.state.transactions))
     };
 
+    //Удаление транзакции
     deleteTransaction = (key) => {
         const transactions = this.state.transactions.filter(item => item.id !== key);
         this.setState({transactions}, this.computeBalance)
